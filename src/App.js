@@ -1,9 +1,16 @@
+import Header from './components/Header';
+import BooksContainer from './containers/BooksContainer';
 import './App.css';
+import HeroSection from './components/HeroSection';
+import Footer from './components/Footer';
 
 function App() {
   return (
     <>
-      <h1>Mindful Reading</h1>
+      <Header/>
+      <HeroSection/>
+      <BooksContainer/>
+      <Footer/>
     </>
   );
 }
