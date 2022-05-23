@@ -3,7 +3,7 @@ import BooksSection from "../components/BooksSection";
 
 const BooksContainer = () => {
 
-    const [bestSellers, setBestSellers] = useState([]);
+    const [bestSellersIsbn, setBestSellersIsbn] = useState([]);
 
     useEffect(() => {
         getBestSellers();
@@ -18,14 +18,18 @@ const BooksContainer = () => {
           })
         .then(res => res.json())
         .then(nytBestSellers => {
-            console.log(nytBestSellers.results)
-            setBestSellers(nytBestSellers.results);
+            const bestSellersIsbn = nytBestSellers.results.map((bestseller) => {
+                // const rank = bestseller.rank;
+                //const isbn = bestseller.book_details[0].primary_isbn10
+                return {[bestseller.rank]: [bestseller.book_details[0].primary_isbn10]}
+            });
+            setBestSellersIsbn(bestSellersIsbn);
         })
     }
 
     return (
         <>
-            <BooksSection bestSellers={bestSellers}/>
+            <BooksSection/>
         </>
     );
 }
