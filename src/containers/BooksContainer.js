@@ -1,7 +1,9 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import BooksSection from "../components/BooksSection";
 
 const BooksContainer = () => {
+
+    const [bestSellers, setBestSellers] = useState([]);
 
     useEffect(() => {
         getBestSellers();
@@ -15,12 +17,15 @@ const BooksContainer = () => {
             },
           })
         .then(res => res.json())
-        .then(data => console.log(data.results))
+        .then(nytBestSellers => {
+            console.log(nytBestSellers.results)
+            setBestSellers(nytBestSellers.results);
+        })
     }
 
     return (
         <>
-            <BooksSection/>
+            <BooksSection bestSellers={bestSellers}/>
         </>
     );
 }

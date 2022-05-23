@@ -1,9 +1,10 @@
 import StarRating from "./StarRating";
 
-const Book = () => {
+const Book = ({title, author}) => {
     return (
         <>
-        <p>Book</p>
+        <p>{title}</p>
+        <p>{author}</p>
         <StarRating/>
         </>
     );
