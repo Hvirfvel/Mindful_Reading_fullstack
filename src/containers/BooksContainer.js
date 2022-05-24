@@ -4,10 +4,15 @@ import BooksSection from "../components/BooksSection";
 const BooksContainer = () => {
 
     const [bestSellersIsbn, setBestSellersIsbn] = useState([]);
+    const [bestSellers, setBestSellers] = useState([]);
 
     useEffect(() => {
         getBestSellers();
     }, [])
+
+    useEffect(() => {
+        getBestSellersGoogleApi(bestSellersIsbn);
+    }, [bestSellersIsbn])
 
     const getBestSellers = () => {
         fetch(`https://api.nytimes.com/svc/books/v3/lists.json?list=hardcover-fiction&api-key=${process.env.REACT_APP_NEW_YORK_TIMES_BOOKS_API_KEY}`, {
@@ -25,6 +30,23 @@ const BooksContainer = () => {
             });
             setBestSellersIsbn(bestSellersIsbn);
         })
+    }
+
+    const getBestSellersGoogleApi = (bestSellersIsbn) => {
+        const booksList = [];
+        bestSellersIsbn.map((book) => {
+            
+            fetch(`https://www.googleapis.com/books/v1/volumes?q=isbn:${Object.values(book).toString()}`, {method: "GET"})
+            .then(res => res.json())
+            .then(bookData => {
+                const tempBook = bookData.items;
+                tempBook[0]["rank"] = parseInt(Object.keys(book).join());
+                booksList.push(tempBook);
+                }
+            )
+            
+        })
+        setBestSellers(booksList)
     }
 
     return (
