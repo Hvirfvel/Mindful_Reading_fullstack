@@ -51,7 +51,8 @@ const BooksContainer = () => {
 
     return (
         <>
-            <BooksSection/>
+            
+            <BooksSection bestSellers={bestSellers}/>
         </>
     );
 }

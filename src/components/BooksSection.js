@@ -1,15 +1,19 @@
 import Book from "./Book";
 
-const BooksSection = () => {
+const BooksSection = ({bestSellers}) => {
 
-    // const bestSellerNodes = bestSellers.map((bestSeller) => {
-    //     return <Book title={bestSeller.book_details[0].title} author={bestSeller.book_details[0].author} key={bestSeller.book_details[0].primary_isbn10}/>
-    // })
+    if (!bestSellers || bestSellers.length === 0) {
+        return <h2>Loading books...</h2>
+    }
+
+    const bestSellerNodes = bestSellers.sort((a, b) => {return a[0].rank - b[0].rank}).map((bestSeller) => {
+        return <Book title={bestSeller[0].volumeInfo.title} author={bestSeller[0].volumeInfo.authors} rank={bestSeller[0].rank} key={bestSeller[0].volumeInfo.industryIdentifiers[0].identifier}/>
+    })
 
     return (
-        <>
-            {/* {bestSellerNodes} */}
-        </>
+        <ul>
+            {bestSellerNodes}
+        </ul>
     );
 }
 export default BooksSection;
